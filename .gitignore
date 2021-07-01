@@ -1,0 +1,4 @@
+.env
+ca.crt
+client.crt
+client.key
