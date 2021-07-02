@@ -36,3 +36,7 @@ You may also need to visit `https://localhost:8888` and/or `https://127.0.0.1:88
 Visit `wss://localhost:8888` and accept the certificate, and navigate to the page. It will get stuck loading, but should then allow you to use the explorer.
 
 ![Homer getting angry at web browsers](https://media.giphy.com/media/CJxXHfRAYvtqU/source.gif)
+
+## Thanks
+
+Major thanks to [Andy Stanford-Clark](https://github.com/andysc) for being the most sought-after user tester, and for contributing to the solution.
