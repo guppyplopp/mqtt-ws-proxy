@@ -11,11 +11,10 @@ Designed for use with my MQTT Topic Tree explorer because, well, why not right? 
 ## To use
 
 1) Clone this repo, or fork if you need to make changes to the behaviour to set it up for your broker.
-2) Modify the .env file (note: SERVER_* and CLIENT_* env vars are able to be the same if needed) based on .env.example. *Note: if you need a certificate, the recommendation solution is to use [Let's Encrypt](https://letsencrypt.org/)*
+2) Modify the .env (copied from .env.example) file (note: `SERVER_*` and `CLIENT_*` env vars are able to be the same if needed). *Note: if you need a certificate, the recommendation solution is to use [Let's Encrypt](https://letsencrypt.org/)*
 3) Install the dependancies using `npm i`.
-4) Run the broker with `node server.js`.
-5) After this, run the main app in a different terminal `node index.js`, which will forward all messages to the local WSS enabled broker.
-6) Explore this using https://tomdev10-mqtt-topic-tree.netlify.app/, which should open and connect automatically.
+4) Run the proxy with `npm run dev`.
+5) Explore this using https://tomdev10-mqtt-topic-tree.netlify.app/, which should open and connect automatically.
 
 
 ## Troubleshooting

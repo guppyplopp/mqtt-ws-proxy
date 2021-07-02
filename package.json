@@ -4,7 +4,9 @@
   "description": "A proxy for forwarding MQTT to wss for use with mqtt-topic-tree",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "(cp -n .env.example .env || true)",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":  "concurrently --kill-others \"node server.js\" \"node index.js\""
   },
   "keywords": [
     "mqtt",
@@ -15,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "aedes": "^0.46.0",
+    "concurrently": "^6.2.0",
     "dotenv": "^10.0.0",
     "fs": "^0.0.1-security",
     "mqtt": "^4.2.6",
