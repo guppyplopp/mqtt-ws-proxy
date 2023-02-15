@@ -2,3 +2,4 @@
 ca.crt
 client.crt
 client.key
+node_modules
