@@ -1,27 +1,26 @@
 {
-  "name": "mqtt-wss-proxy",
+  "name": "mqtt-ws-proxy",
   "version": "1.0.0",
-  "description": "A proxy for forwarding MQTT to wss for use with mqtt-topic-tree",
-  "main": "index.js",
-  "scripts": {
-    "postinstall": "(cp -n .env.example .env || true)",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":  "concurrently --kill-others \"node server.js\" \"node index.js\""
-  },
-  "keywords": [
-    "mqtt",
-    "wss",
-    "proxy"
-  ],
-  "author": "Tom Davidson",
-  "license": "MIT",
+  "description": "This is a very simple local Websocket proxy, which forward messages both ways to a MQTT broker without websocket support",
+  "main": "mqtt-ws-proxy.js",
   "dependencies": {
-    "aedes": "^0.46.0",
-    "concurrently": "^6.2.0",
-    "dotenv": "^10.0.0",
-    "fs": "^0.0.1-security",
-    "mqtt": "^4.2.6",
-    "open": "^8.2.1",
-    "websocket-stream": "^5.5.2"
-  }
+    "mqtt": "^4.3.7",
+    "ws": "^8.12.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node mqtt-ws-proxy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guppyplopp/mqtt-ws-proxy.git"
+  },
+  "keywords": [],
+  "author": "Pål Walfridsson, Darktown Production AB",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guppyplopp/mqtt-ws-proxy/issues"
+  },
+  "homepage": "https://github.com/guppyplopp/mqtt-ws-proxy#readme"
 }
