@@ -46,6 +46,8 @@ function sendToWS(data) {
 
 
 
+
+// MQTT
 const mqttClient = mqtt.connect(mqttBroker, {clientID: 'Imagine'});
 
 function subscribeToTopic(topic) {
@@ -60,10 +62,8 @@ mqttClient.on('connect', function () {
   console.log('mqttBroker:', mqttBroker);
   subscribeToTopic('mqtt/pimylifeup');
 });
-// localClient.on('connect', function () {console.log('[LOG]================= connected to local mqtt =================');});
 
 mqttClient.on('error', function (error) {console.log('[LOG]================= error from remote mqtt =================: ', error);});
-// localClient.on('error', function (error) {console.log('[LOG]================= error from local mqtt =================: ', error);});
 
 
 mqttClient.on('message', function(topic, message) {
@@ -71,5 +71,4 @@ mqttClient.on('message', function(topic, message) {
     console.log("[LOG]================= mqttMessageDispatch to WS ====:", topic ,' with: ',  message);
     // Send to WS
     sendToWS({topic: topic, message: message});
-    // localClient.publish(topic, message, {retain: true})
 });
