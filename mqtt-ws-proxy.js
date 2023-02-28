@@ -6,8 +6,21 @@ const config = require('./config.json');
 const mqttBroker = 'mqtt://' + config.mqttIP + ':' + config.mqttPort;
 
 
+function isValidJSON(text) {
+  try {
+    JSON.parse(text);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // WS
+// Handling Websocket connection to the browser/GUI
 const ws = new Server({port: config.myWebsocketPort});
+console.log(' ');
+console.log(' ');
+console.log(' ');
 console.log(`Websocket server listening on port ws://localhost:${config.myWebsocketPort}`);
 const connections = new Set();
 
@@ -16,15 +29,20 @@ ws.on('connection', (connectingWS) => {
   connections.add(connectingWS);
   
   connectingWS.on('message', (data) => {
-    console.log('Websocket recieved:', data);
-    const message = JSON.parse(data);
-    if (data.topic === 'subscribe') {
-      subscribeToTopic(data.topic);
-    } else {
-      // Send to MQTT
-      mqttClient.publish(data.topic, data.message, (error) => {
-        if (error) console.error(error);
-      });
+    try {
+      const message = JSON.parse(data.toString());
+      console.log('[LOG]=== Websocket incoming message:', message);
+      if (data.topic === 'subscribe') {
+        subscribeToTopic(data.topic);
+      } else {
+        // Send to MQTT
+        mqttClient.publish(data.topic, data.message, (error) => {
+          if (error) console.error(error);
+        });
+      }
+      
+    } catch (error) {
+      console.log(error, 'Message recieved:', data.toString());
     }
   });
 
@@ -48,6 +66,7 @@ function sendToWS(data) {
 
 
 // MQTT
+// Handling MQTT connection to the broker
 const mqttClient = mqtt.connect(mqttBroker, {clientID: 'Imagine'});
 
 function subscribeToTopic(topic) {
@@ -60,15 +79,15 @@ function subscribeToTopic(topic) {
 mqttClient.on('connect', function () {
   console.log('[LOG]================= connected to remote mqtt =================');
   console.log('mqttBroker:', mqttBroker);
-  subscribeToTopic('mqtt/pimylifeup');
+  subscribeToTopic('event/#');
 });
 
 mqttClient.on('error', function (error) {console.log('[LOG]================= error from remote mqtt =================: ', error);});
 
 
 mqttClient.on('message', function(topic, message) {
-    console.log(`[LOG]================= message received =============: ${topic.toString()} : ${message.toString()}`);
-    console.log("[LOG]================= mqttMessageDispatch to WS ====:", topic ,' with: ',  message);
+    console.log(`[LOG]================= message received from MQTT =============: ${topic.toString()} : ${message.toString()}`);
+    // console.log("[LOG]================= mqttMessageDispatch to WS ====:", topic ,' with: ',  message);
     // Send to WS
-    sendToWS({topic: topic, message: message});
+    sendToWS({topic: topic, message: message.toString()});
 });
