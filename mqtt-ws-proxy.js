@@ -79,7 +79,7 @@ function subscribeToTopic(topic) {
 mqttClient.on('connect', function () {
   console.log('[LOG]================= connected to remote mqtt =================');
   console.log('mqttBroker:', mqttBroker);
-  subscribeToTopic('event/#');
+  subscribeToTopic('+/event/#');
 });
 
 mqttClient.on('error', function (error) {console.log('[LOG]================= error from remote mqtt =================: ', error);});
