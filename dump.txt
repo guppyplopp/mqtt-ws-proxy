@@ -1,0 +1,79 @@
+Websocket server listening on port ws://localhost:8086
+[LOG]================= connected to remote mqtt =================
+mqttBroker: mqtt://192.168.12.4:1883
+Subscribed to topic: +/event/#
+[LOG]================= message received from MQTT =============: raspberrypi/event/io/button : {
+  "@type" : "event/io/button/pressed",
+  "@id" : "665ed10b-bc1e-4ce7-b42d-97d6dfd248c1",
+  "buttonId" : "13",
+  "creationDateTime" : "2017-04-28T10:58:12.592+02:00",
+  "processId" : "487",
+  "systemId" : "raspberrypi"
+}
+[LOG]================= message received from MQTT =============: PRIME82/event/image : {
+  "@type" : "event/image/created",
+  "@id" : "6956c7e0-9772-4027-ade4-42867268bbde",
+  "sopInstanceUid" : "1.3.6.1.4.1.5962.99.3.1219838270.81.692631443.407",
+  "imageCreationDateTime" : "2023-03-01T18:43:51.443+01:00[Europe/Berlin]",
+  "creationDateTime" : "2023-03-01T18:43:52.18+01:00[Europe/Berlin]",
+  "processId" : "1684",
+  "systemId" : "PRIME82",
+  "studyInstanceUid" : "1.3.6.1.4.1.5962.99.3.1219838270.81",
+  "patientId" : "em230201082934"
+}
+[LOG]================= message received from MQTT =============: PRIME82/event/image : {
+  "@type" : "event/image/created",
+  "@id" : "95cb7ad7-c748-4922-adbf-3caef56495d1",
+  "sopInstanceUid" : "1.3.6.1.4.1.5962.99.3.1219838270.81.692632321.804",
+  "imageCreationDateTime" : "2023-03-01T18:43:52.321+01:00[Europe/Berlin]",
+  "creationDateTime" : "2023-03-01T18:43:52.887+01:00[Europe/Berlin]",
+  "processId" : "1684",
+  "systemId" : "PRIME82",
+  "studyInstanceUid" : "1.3.6.1.4.1.5962.99.3.1219838270.81",
+  "patientId" : "em230201082934"
+}
+
+
+
+[LOG]================= message received from MQTT =============: raspberrypi/event/io/button : {
+  "@type" : "event/io/button/pressed",
+  "@id" : "da6e74b6-45c2-410a-9b09-67c5fd4151e8",
+  "buttonId" : "12",
+  "creationDateTime" : "2017-04-28T11:07:16.286+02:00",
+  "processId" : "487",
+  "systemId" : "raspberrypi"
+}
+[LOG]================= message received from MQTT =============: PRIME82/event/recording : {
+  "@type" : "event/recording/started",
+  "@id" : "764f2865-1dad-43d8-8e4c-afc16748979c",
+  "sopInstanceUid" : "1.3.6.1.4.1.5962.99.3.1219838270.81.693175059.312",
+  "captureCardUid" : "b91b48ab-6943-4da3-93bf-0daeabf39f31",
+  "label" : "Capture Card 1",
+  "creationDateTime" : "2023-03-01T18:52:55.505+01:00[Europe/Berlin]",
+  "processId" : "1684",
+  "systemId" : "PRIME82",
+  "studyInstanceUid" : "1.3.6.1.4.1.5962.99.3.1219838270.81",
+  "patientId" : "em230201082934"
+}
+
+
+[LOG]================= message received from MQTT =============: raspberrypi/event/io/button : {
+  "@type" : "event/io/button/pressed",
+  "@id" : "5bc16903-ed3b-4206-902f-43da91c7a6bf",
+  "buttonId" : "12",
+  "creationDateTime" : "2017-04-28T11:07:25.938+02:00",
+  "processId" : "487",
+  "systemId" : "raspberrypi"
+}
+[LOG]================= message received from MQTT =============: PRIME82/event/recording : {
+  "@type" : "event/recording/stopped",
+  "@id" : "d695ffe8-a434-49db-a95e-f1cce34ff3a8",
+  "sopInstanceUid" : "1.3.6.1.4.1.5962.99.3.1219838270.81.693175059.312",
+  "captureCardUid" : "b91b48ab-6943-4da3-93bf-0daeabf39f31",
+  "label" : "Capture Card 1",
+  "creationDateTime" : "2023-03-01T18:53:04.985+01:00[Europe/Berlin]",
+  "processId" : "1684",
+  "systemId" : "PRIME82",
+  "studyInstanceUid" : "1.3.6.1.4.1.5962.99.3.1219838270.81",
+  "patientId" : "em230201082934"
+}
