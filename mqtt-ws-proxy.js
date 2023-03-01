@@ -30,8 +30,8 @@ ws.on('connection', (connectingWS) => {
   
   connectingWS.on('message', (data) => {
     try {
-      const message = JSON.parse(data.toString());
-      console.log('[LOG]=== Websocket incoming message:', message);
+      data = JSON.parse(data.toString());
+      console.log('[LOG]=== Websocket incoming message:', data);
       if (data.topic === 'subscribe') {
         subscribeToTopic(data.topic);
       } else {
