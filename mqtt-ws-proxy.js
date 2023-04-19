@@ -30,13 +30,19 @@ ws.on('connection', (connectingWS) => {
   
   connectingWS.on('message', (data) => {
     try {
-      data = JSON.parse(data.toString());
-      console.log('[LOG]=== Websocket incoming message:', data);
+      data = JSON.parse(data);
+      console.log('[LOG]=== Websocket incoming total data:', data);
+      console.log('[LOG]=== Websocket incoming topic:', data.topic);
+      console.log('[LOG]=== Websocket incoming message data:', data.message);
       if (data.topic === 'subscribe') {
-        subscribeToTopic(data.topic);
+        subscribeToTopic(data.message);
       } else {
         // Send to MQTT
-        mqttClient.publish(data.topic, data.message, (error) => {
+        const msg = JSON.stringify(data.message);
+        console.log('[LOG]=== Proxy forwards to MQTT: ');
+        console.log('[LOG]=== Topic: ', data.topic);
+        console.log('[LOG]=== Message: ', msg);
+        mqttClient.publish(data.topic, msg, (error) => {
           if (error) console.error(error);
         });
       }
@@ -90,4 +96,50 @@ mqttClient.on('message', function(topic, message) {
     // console.log("[LOG]================= mqttMessageDispatch to WS ====:", topic ,' with: ',  message);
     // Send to WS
     sendToWS({topic: topic, message: message.toString()});
+
+    // Debug
+    // debugBounceMessage({topic: topic, message: message});
+    // debugSendMessage();
 });
+
+
+
+function debugSendMessage() {
+  let mess = {
+    "@type":"event/io/button/pressed",
+    // "@id":"c967561d-eb90-4dc3-a0d8-583ce5488960",
+    "@id":"c967561d-eb90-4dc3-a0d8-583ce0000000",
+    "buttonId":"12",
+    "creationDateTime":"2017-06-11T06:35:14.901+02:00",
+    "processId":"Imagine",
+    "systemId":"raspberrypi"
+  };
+  setTimeout(() => {
+    console.log('Auto send message: ', mess);
+    mess = JSON.stringify(mess);
+    mqttClient.publish('raspberrypi/event/io/button', mess);
+  }, 10000);
+}
+
+// debugSendMessage();
+
+
+
+
+function debugBounceMessage(data) {
+  setTimeout(() => {
+    // Alt 2
+    let mess = data.message.toString();
+    mess = JSON.parse(mess);
+    mess = JSON.stringify(mess);
+    console.log('After json stringify. ', mess);
+    data.message = mess; 
+
+    console.log('Bouncing back ========================');
+    console.log('Bouncing back topic: ', data.topic);
+    console.log('Bouncing back message: ', data.message);
+    mqttClient.publish(data.topic, data.message);
+    
+
+  }, 10000);
+}

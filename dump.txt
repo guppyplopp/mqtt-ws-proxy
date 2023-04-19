@@ -77,3 +77,138 @@ Subscribed to topic: +/event/#
   "studyInstanceUid" : "1.3.6.1.4.1.5962.99.3.1219838270.81",
   "patientId" : "em230201082934"
 }
+
+
+
+
+New client connected to Websocket
+[LOG]================= message received from MQTT =============: raspberrypi/event/io/button : {
+  "@type" : "event/io/button/pressed",
+  "@id" : "0f922f1f-13b7-4d86-bbe5-c199ac5dfb62",
+  "buttonId" : "13",
+  "creationDateTime" : "2017-06-11T08:08:10.417+02:00",
+  "processId" : "487",
+  "systemId" : "raspberrypi"
+}
+Sent to WS =====  {
+  topic: 'raspberrypi/event/io/button',
+  message: '{\n' +
+    '  "@type" : "event/io/button/pressed",\n' +
+    '  "@id" : "0f922f1f-13b7-4d86-bbe5-c199ac5dfb62",\n' +
+    '  "buttonId" : "13",\n' +
+    '  "creationDateTime" : "2017-06-11T08:08:10.417+02:00",\n' +
+    '  "processId" : "487",\n' +
+    '  "systemId" : "raspberrypi"\n' +
+    '}'
+}
+[LOG]================= message received from MQTT =============: PRIME82/event/image : {
+  "@type" : "event/image/created",
+  "@id" : "05cc532c-c46d-428e-b929-1f9e1daafe7a",
+  "sopInstanceUid" : "1.3.6.1.4.1.5962.99.3.1243229430.141.484079699.862",
+  "imageCreationDateTime" : "2023-04-14T16:54:39.699+02:00[Europe/Berlin]",
+  "creationDateTime" : "2023-04-14T16:54:40.484+02:00[Europe/Berlin]",
+  "processId" : "8872",
+  "systemId" : "PRIME82",
+  "studyInstanceUid" : "1.3.6.1.4.1.5962.99.3.1243229430.141",
+  "patientId" : "11111111"
+}
+Sent to WS =====  {
+  topic: 'PRIME82/event/image',
+  message: '{\r\n' +
+    '  "@type" : "event/image/created",\r\n' +
+    '  "@id" : "05cc532c-c46d-428e-b929-1f9e1daafe7a",\r\n' +
+    '  "sopInstanceUid" : "1.3.6.1.4.1.5962.99.3.1243229430.141.484079699.862",\r\n' +
+    '  "imageCreationDateTime" : "2023-04-14T16:54:39.699+02:00[Europe/Berlin]",\r\n' +
+    '  "creationDateTime" : "2023-04-14T16:54:40.484+02:00[Europe/Berlin]",\r\n' +
+    '  "processId" : "8872",\r\n' +
+    '  "systemId" : "PRIME82",\r\n' +
+    '  "studyInstanceUid" : "1.3.6.1.4.1.5962.99.3.1243229430.141",\r\n' +
+    '  "patientId" : "11111111"\r\n' +
+    '}'
+}
+[LOG]================= message received from MQTT =============: PRIME82/event/study : {
+  "@type" : "event/study/studyfinish",
+  "@id" : "d97a394a-b00f-46ea-8138-f1add1580900",
+  "accessionNumber" : "pMJRS42302287461",
+  "creationDateTime" : "2023-04-14T16:56:15.075+02:00[Europe/Berlin]",
+  "processId" : "8872",
+  "systemId" : "PRIME82",
+  "studyInstanceUid" : "1.3.6.1.4.1.5962.99.3.1243229430.141",
+  "patientId" : "11111111"
+}
+Sent to WS =====  {
+  topic: 'PRIME82/event/study',
+  message: '{\r\n' +
+    '  "@type" : "event/study/studyfinish",\r\n' +
+    '  "@id" : "d97a394a-b00f-46ea-8138-f1add1580900",\r\n' +
+    '  "accessionNumber" : "pMJRS42302287461",\r\n' +
+    '  "creationDateTime" : "2023-04-14T16:56:15.075+02:00[Europe/Berlin]",\r\n' +
+    '  "processId" : "8872",\r\n' +
+    '  "systemId" : "PRIME82",\r\n' +
+    '  "studyInstanceUid" : "1.3.6.1.4.1.5962.99.3.1243229430.141",\r\n' +
+    '  "patientId" : "11111111"\r\n' +
+    '}'
+}
+[LOG]================= message received from MQTT =============: PRIME82/event/streaming : {
+  "@type" : "event/streaming/stop",
+  "@id" : "72cbcceb-a722-4cc7-8825-f03146b3734a",
+  "captureCardUid" : "b91b48ab-6943-4da3-93bf-0daeabf39f31",
+  "label" : "Capture Card 1",
+  "creationDateTime" : "2023-04-14T16:56:15.083+02:00[Europe/Berlin]",
+  "processId" : "8872",
+  "systemId" : "PRIME82"
+}
+Sent to WS =====  {
+  topic: 'PRIME82/event/streaming',
+  message: '{\r\n' +
+    '  "@type" : "event/streaming/stop",\r\n' +
+    '  "@id" : "72cbcceb-a722-4cc7-8825-f03146b3734a",\r\n' +
+    '  "captureCardUid" : "b91b48ab-6943-4da3-93bf-0daeabf39f31",\r\n' +
+    '  "label" : "Capture Card 1",\r\n' +
+    '  "creationDateTime" : "2023-04-14T16:56:15.083+02:00[Europe/Berlin]",\r\n' +
+    '  "processId" : "8872",\r\n' +
+    '  "systemId" : "PRIME82"\r\n' +
+    '}'
+}
+[LOG]================= message received from MQTT =============: PRIME82/event/streaming : {
+  "@type" : "event/streaming/stop",
+  "@id" : "a5a4b274-6fef-4b3e-a0e3-50576ecd7c1e",
+  "captureCardUid" : "b91b48ab-6943-4da3-93bf-0daeabf39f32",
+  "label" : "Capture Card 2",
+  "creationDateTime" : "2023-04-14T16:56:15.084+02:00[Europe/Berlin]",
+  "processId" : "8872",
+  "systemId" : "PRIME82"
+}
+Sent to WS =====  {
+  topic: 'PRIME82/event/streaming',
+  message: '{\r\n' +
+    '  "@type" : "event/streaming/stop",\r\n' +
+    '  "@id" : "a5a4b274-6fef-4b3e-a0e3-50576ecd7c1e",\r\n' +
+    '  "captureCardUid" : "b91b48ab-6943-4da3-93bf-0daeabf39f32",\r\n' +
+    '  "label" : "Capture Card 2",\r\n' +
+    '  "creationDateTime" : "2023-04-14T16:56:15.084+02:00[Europe/Berlin]",\r\n' +
+    '  "processId" : "8872",\r\n' +
+    '  "systemId" : "PRIME82"\r\n' +
+    '}'
+}
+[LOG]================= message received from MQTT =============: PRIME82/event/thirdparty : {
+  "@type" : "event/thirdparty/invoked",
+  "@id" : "b4d27df7-8b13-457a-99eb-2cc44a88b147",
+  "type" : "WEB",
+  "label" : "Imagine",
+  "creationDateTime" : "2023-04-14T16:57:02.495+02:00[Europe/Berlin]",
+  "processId" : "8872",
+  "systemId" : "PRIME82"
+}
+Sent to WS =====  {
+  topic: 'PRIME82/event/thirdparty',
+  message: '{\r\n' +
+    '  "@type" : "event/thirdparty/invoked",\r\n' +
+    '  "@id" : "b4d27df7-8b13-457a-99eb-2cc44a88b147",\r\n' +
+    '  "type" : "WEB",\r\n' +
+    '  "label" : "Imagine",\r\n' +
+    '  "creationDateTime" : "2023-04-14T16:57:02.495+02:00[Europe/Berlin]",\r\n' +
+    '  "processId" : "8872",\r\n' +
+    '  "systemId" : "PRIME82"\r\n' +
+    '}'
+}
