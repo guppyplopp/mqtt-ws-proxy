@@ -2,8 +2,12 @@
 const mqtt = require('mqtt');
 const { Server } = require('ws');
 const config = require('./config.json');
+// const config = {
+//   "mqttIP": "192.168.1.25", 
+//   "mqttPort": "1883", 
+//   "myWebsocketPort": "8086"
+// };
 
-const mqttBroker = 'mqtt://' + config.mqttIP + ':' + config.mqttPort;
 
 
 function isValidJSON(text) {
@@ -15,6 +19,14 @@ function isValidJSON(text) {
   }
 }
 
+// let test = require('../imagine/imagine_gui/app/uiStrings_en.json');
+// let test = require('C:/inetpub/wwwroot/imagine/uiStrings_en.json');
+// console.log(test);
+
+// fetch('http://192.168.3.2/imagine/nms-config.js', {method: 'GET'})
+// .then(respone => respone.text())
+// .then(text => console.log(text));
+
 // WS
 // Handling Websocket connection to the browser/GUI
 const ws = new Server({port: config.myWebsocketPort});
@@ -23,6 +35,20 @@ console.log(' ');
 console.log(' ');
 console.log(`Websocket server listening on port ws://localhost:${config.myWebsocketPort}`);
 const connections = new Set();
+const messageQueue = [];
+
+
+// check the queue 
+setInterval(() => {
+  if (connections.size > 0) {
+    while (messageQueue.length > 0) {
+      let data = messageQueue.pop();
+      sendToWS(data);
+    }
+  }
+}, 1000);
+
+
 
 ws.on('connection', (connectingWS) => {
   console.log('New client connected to Websocket');
@@ -31,10 +57,13 @@ ws.on('connection', (connectingWS) => {
   connectingWS.on('message', (data) => {
     try {
       data = JSON.parse(data);
-      console.log('[LOG]=== Websocket incoming total data:', data);
       console.log('[LOG]=== Websocket incoming topic:', data.topic);
-      console.log('[LOG]=== Websocket incoming message data:', data.message);
-      if (data.topic === 'subscribe') {
+      console.log('[LOG]=== Websocket incoming total data:', data);
+      // console.log('[LOG]=== Websocket incoming message data:', data.message);
+      if (data.topic === 'connectToMQTT') {
+        let ip = data.message;
+        connectToMQTT(ip);
+      } else if (data.topic === 'subscribe') {
         subscribeToTopic(data.message);
       } else {
         // Send to MQTT
@@ -59,10 +88,14 @@ ws.on('connection', (connectingWS) => {
 });
 
 function sendToWS(data) {
-  connections.forEach((connectingWS) => {
-    connectingWS.send(JSON.stringify(data));
-    console.log('Sent to WS ===== ', data);
-  });
+  if (connections.size > 0) {
+    connections.forEach((connectingWS) => {
+      connectingWS.send(JSON.stringify(data));
+      console.log('Sent to WS ===== ', data);
+    });
+  } else {
+    messageQueue.push(data);
+  }
 }
 
 
@@ -73,25 +106,44 @@ function sendToWS(data) {
 
 // MQTT
 // Handling MQTT connection to the broker
-const mqttClient = mqtt.connect(mqttBroker, {clientID: 'Imagine'});
 
-function subscribeToTopic(topic) {
-  mqttClient.subscribe(topic);
-  console.log('Subscribed to topic:', topic);
-}
+let mqttClient; 
 
 
+function connectToMQTT(ip) {
 
-mqttClient.on('connect', function () {
-  console.log('[LOG]================= connected to remote mqtt =================');
-  console.log('mqttBroker:', mqttBroker);
-  subscribeToTopic('+/event/#');
-});
+  if (mqttClient) {
+    mqttClient.end();
+  }
 
-mqttClient.on('error', function (error) {console.log('[LOG]================= error from remote mqtt =================: ', error);});
+  const mqttAddress = 'mqtt://' + ip + ':' + config.mqttPort;
+  mqttClient = mqtt.connect(mqttAddress, {
+    clientID: 'Imagine', 
+    connectTimeout: 3000, 
+    reconnectPeriod: 10000, 
+  });
 
+  mqttClient.on('connect', function () {
+    console.log('[LOG]================= connected to remote mqtt =================');
+    console.log('mqttAddress:', mqttAddress);
+    sendToWS({topic: 'log', message: JSON.stringify('Connected to mqtt (Prime pedal): ' + mqttAddress) });
+    subscribeToTopic('+/event/#');
+  });
+  
+  mqttClient.on('error', function (error) {
+    console.log('[LOG]================= error from remote mqtt =================: ', error);
+    sendToWS({topic: 'log', message: JSON.stringify('Error from remote mqtt: ' + error.toString()) });
+  });
 
-mqttClient.on('message', function(topic, message) {
+  
+  
+  mqttClient.on('close', function () {
+    console.log('[LOG]================= Closed connection to remote mqtt =================: ');
+    sendToWS({topic: 'log', message: JSON.stringify('Closed connection to remote mqtt: ' + mqttAddress) });
+  });
+  
+  
+  mqttClient.on('message', function(topic, message) {
     console.log(`[LOG]================= message received from MQTT =============: ${topic.toString()} : ${message.toString()}`);
     // console.log("[LOG]================= mqttMessageDispatch to WS ====:", topic ,' with: ',  message);
     // Send to WS
@@ -100,46 +152,16 @@ mqttClient.on('message', function(topic, message) {
     // Debug
     // debugBounceMessage({topic: topic, message: message});
     // debugSendMessage();
-});
-
-
-
-function debugSendMessage() {
-  let mess = {
-    "@type":"event/io/button/pressed",
-    // "@id":"c967561d-eb90-4dc3-a0d8-583ce5488960",
-    "@id":"c967561d-eb90-4dc3-a0d8-583ce0000000",
-    "buttonId":"12",
-    "creationDateTime":"2017-06-11T06:35:14.901+02:00",
-    "processId":"Imagine",
-    "systemId":"raspberrypi"
-  };
-  setTimeout(() => {
-    console.log('Auto send message: ', mess);
-    mess = JSON.stringify(mess);
-    mqttClient.publish('raspberrypi/event/io/button', mess);
-  }, 10000);
+  });
 }
 
-// debugSendMessage();
 
-
-
-
-function debugBounceMessage(data) {
-  setTimeout(() => {
-    // Alt 2
-    let mess = data.message.toString();
-    mess = JSON.parse(mess);
-    mess = JSON.stringify(mess);
-    console.log('After json stringify. ', mess);
-    data.message = mess; 
-
-    console.log('Bouncing back ========================');
-    console.log('Bouncing back topic: ', data.topic);
-    console.log('Bouncing back message: ', data.message);
-    mqttClient.publish(data.topic, data.message);
-    
-
-  }, 10000);
+function subscribeToTopic(topic) {
+  mqttClient.subscribe(topic);
+  console.log('Subscribed to topic:', topic);
 }
+
+
+
+
+
