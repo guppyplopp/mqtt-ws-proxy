@@ -57,7 +57,7 @@ ws.on('connection', (connectingWS) => {
   connectingWS.on('message', (data) => {
     try {
       data = JSON.parse(data);
-      console.log('[LOG]=== Websocket incoming topic:', data.topic);
+      // console.log('[LOG]=== Websocket incoming topic:', data.topic);
       console.log('[LOG]=== Websocket incoming total data:', data);
       // console.log('[LOG]=== Websocket incoming message data:', data.message);
       if (data.topic === 'connectToMQTT') {
@@ -132,7 +132,7 @@ function connectToMQTT(ip) {
   
   mqttClient.on('error', function (error) {
     console.log('[LOG]================= error from remote mqtt =================: ', error);
-    sendToWS({topic: 'log', message: JSON.stringify('Error from remote mqtt: ' + error.toString()) });
+    sendToWS({topic: 'error', message: JSON.stringify('Error from remote mqtt: ' + error.toString()) });
   });
 
   
